@@ -45,6 +45,7 @@ app.post('/api/cart-items', (req, res) => {
         price: req.body.price,
         quantity: req.body.quantity
     };
+    res.status(201);
     cart.push(newItem);
     res.send(newItem);
 });
@@ -61,12 +62,12 @@ app.put('/api/cart-items/:id', (req, res) => {
 
 app.delete('/api/cart-items/:id', (req, res) => {
     const trolley = cart.find(shop => shop.id === parseInt(req.params.id));
-    if (!trolley) res.status(204).send();
+    if (!trolley) res.status(404).send();
 
     const index = cart.indexOf(trolley);
+    res.status(204);
     cart.splice(index, 1);
-
-    res.send(trolley);
+    res.end();
 })
 
 
